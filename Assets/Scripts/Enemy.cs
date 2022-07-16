@@ -106,15 +106,23 @@ public class Enemy : MonoBehaviour
     {
         if (!_isRotating)
         {
-            var direction = transform.position - TargetPosition.position;
-            if (direction.x > 0 && Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
-                RotateLeft();
-            else
-                RotateRight();
-            if (direction.y > 0 && Mathf.Abs(direction.y) > Mathf.Abs(direction.x))
-                RotateForward();
-            else
-                RotateBack();
+            var direction = TargetPosition.position - transform.position;
+            print(direction);
+            if ( Mathf.Abs(direction.x) > Mathf.Abs(direction.z))
+            {
+                if(direction.x > 0)
+                    RotateRight();
+                else
+                    RotateLeft();
+
+            }
+            if ( Mathf.Abs(direction.z) > Mathf.Abs(direction.x))
+            {
+                if(direction.z > 0)
+                    RotateForward();
+                else
+                    RotateBack();
+            }
         }
     }
     
@@ -127,12 +135,12 @@ public class Enemy : MonoBehaviour
 
     IEnumerator Roll(Vector3 anchor, Vector3 axis)
     {
-        _isRotating = false;
+        _isRotating = true;
            for(int i=0; i < (90 / speed); i++)
         {
             gameObject.transform.RotateAround(anchor, axis, speed);
             yield return new WaitForSeconds(0.01f);
         }
-        _isRotating = true;
+        _isRotating = false;
     }
 }
