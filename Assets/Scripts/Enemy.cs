@@ -9,7 +9,7 @@ public class Enemy : MonoBehaviour
     public static  Enums.Sides[] currentOrientation = new Enums.Sides[6] {Enums.Sides.Up, Enums.Sides.Front,Enums.Sides.Down, Enums.Sides.Back, Enums.Sides.Left,Enums.Sides.Right};
     [SerializeField]
     public Enums.Sides side;
-    private float speed = 2f;
+    private float speed = 1f;
     private Quaternion nextRotation;
     public Transform TargetPosition;
     private bool _isRotating = false;
