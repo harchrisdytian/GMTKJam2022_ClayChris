@@ -9,7 +9,10 @@ public class Enemy : MonoBehaviour
     public static  Enums.Sides[] currentOrientation = new Enums.Sides[6] {Enums.Sides.Up, Enums.Sides.Front,Enums.Sides.Down, Enums.Sides.Back, Enums.Sides.Left,Enums.Sides.Right};
     [SerializeField]
     public Enums.Sides side;
+    private float speed = 2f;
     private Quaternion nextRotation;
+    public Transform TargetPosition;
+    private bool _isRotating = false;
     
     public 
 
@@ -42,8 +45,7 @@ public class Enemy : MonoBehaviour
 
     void RotateBack()
     {
-        gameObject.transform.position -= Vector3.forward;
-        transform.Rotate(-90, 0, 0,Space.Self);
+        MakeRotate(Vector3.back);
         Enums.Sides tempSide;
 
         tempSide = currentOrientation[0];
@@ -56,8 +58,7 @@ public class Enemy : MonoBehaviour
     }
     void RotateForward()
     {
-        gameObject.transform.position += Vector3.forward;
-        transform.Rotate(90, 0, 0, Space.Self);
+        MakeRotate(Vector3.forward);
         Enums.Sides tempSide;
 
         tempSide = currentOrientation[0];
@@ -70,8 +71,7 @@ public class Enemy : MonoBehaviour
     }
     void RotateLeft()
     {
-        gameObject.transform.position += Vector3.left;
-        gameObject.transform.Rotate(0, 0, 90,Space.World);
+        MakeRotate(Vector3.left);
         Enums.Sides tempSide;
 
         tempSide = currentOrientation[0];
@@ -84,8 +84,7 @@ public class Enemy : MonoBehaviour
     }
     void RotateRight()
     {
-        gameObject.transform.position -= Vector3.left;
-        gameObject.transform.Rotate(0, 0, -90, Space.World);
+        MakeRotate(Vector3.right);
         Enums.Sides tempSide;
 
         tempSide = currentOrientation[0];
@@ -98,29 +97,42 @@ public class Enemy : MonoBehaviour
     }
     void Start()
     {
-        SetSide(side);
+
     }
 
     
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.W))
+        if (!_isRotating)
         {
-            RotateForward();
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            RotateBack();
-        }
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            RotateLeft();
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            RotateRight();
+            var direction = transform.position - TargetPosition.position;
+            if (direction.x > 0 && Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
+                RotateLeft();
+            else
+                RotateRight();
+            if (direction.y > 0 && Mathf.Abs(direction.y) > Mathf.Abs(direction.x))
+                RotateForward();
+            else
+                RotateBack();
         }
     }
     
+    void MakeRotate(Vector3 dir)
+    {
+        var anchor = gameObject.transform.position + (Vector3.down + dir) * 0.5f;
+        var axis = Vector3.Cross(Vector3.up, dir);
+        StartCoroutine(Roll(anchor,axis));
+    }
+
+    IEnumerator Roll(Vector3 anchor, Vector3 axis)
+    {
+        _isRotating = false;
+           for(int i=0; i < (90 / speed); i++)
+        {
+            gameObject.transform.RotateAround(anchor, axis, speed);
+            yield return new WaitForSeconds(0.01f);
+        }
+        _isRotating = true;
+    }
 }
