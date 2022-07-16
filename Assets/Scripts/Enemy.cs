@@ -126,11 +126,16 @@ public class Enemy : MonoBehaviour
         }
     }
     
+    bool CheckDir(Vector3 dir)
+    {
+        return !Physics.Raycast(transform.position + dir, dir, 2);
+    }
     void MakeRotate(Vector3 dir)
     {
         var anchor = gameObject.transform.position + (Vector3.down + dir) * 0.5f;
         var axis = Vector3.Cross(Vector3.up, dir);
-        StartCoroutine(Roll(anchor,axis));
+        if(CheckDir(dir))
+         StartCoroutine(Roll(anchor,axis));
     }
 
     IEnumerator Roll(Vector3 anchor, Vector3 axis)
