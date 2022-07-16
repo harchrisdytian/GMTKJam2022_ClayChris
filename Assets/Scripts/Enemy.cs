@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour
     private Quaternion nextRotation;
     public Transform TargetPosition;
     private bool _isRotating = false;
-    
+    public AudioSource thud;
     public 
 
 
@@ -146,6 +146,7 @@ public class Enemy : MonoBehaviour
             gameObject.transform.RotateAround(anchor, axis, speed);
             yield return new WaitForSeconds(0.01f);
         }
+        thud.Play();
         _isRotating = false;
     }
 }
