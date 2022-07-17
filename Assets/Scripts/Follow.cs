@@ -9,6 +9,7 @@ public class Follow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Target != null)
         transform.position = Target.transform.position;
     }
 }

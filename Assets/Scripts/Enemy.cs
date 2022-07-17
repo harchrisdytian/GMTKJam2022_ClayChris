@@ -90,7 +90,7 @@ public class Enemy : MonoBehaviour
     }
     void Start()
     {
-        TargetPosition = GameObject.Find("Player").transform;
+        TargetPosition = FindObjectOfType<PlayerController>().transform;
     }
 
     
