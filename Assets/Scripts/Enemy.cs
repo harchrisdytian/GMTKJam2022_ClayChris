@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
     public static  Enums.Sides[] currentOrientation = new Enums.Sides[6] {Enums.Sides.Up, Enums.Sides.Front,Enums.Sides.Down, Enums.Sides.Back, Enums.Sides.Left,Enums.Sides.Right};
     [SerializeField]
     public Enums.Sides side;
+    [SerializeField]
     private float speed = 1f;
     private Quaternion nextRotation;
     public Transform TargetPosition;
@@ -45,9 +46,13 @@ public class Enemy : MonoBehaviour
 
     void RotateBack()
     {
+        if (!CheckDir(Vector3.back))
+        {
+            return;
+        }
         MakeRotate(Vector3.back);
         Enums.Sides tempSide;
-
+        
         tempSide = currentOrientation[0];
         currentOrientation[0] = currentOrientation[3];
         currentOrientation[3] = currentOrientation[2];
@@ -58,6 +63,10 @@ public class Enemy : MonoBehaviour
     }
     void RotateForward()
     {
+        if (!CheckDir(Vector3.forward))
+        {
+            return;
+        }
         MakeRotate(Vector3.forward);
         Enums.Sides tempSide;
 
@@ -71,26 +80,34 @@ public class Enemy : MonoBehaviour
     }
     void RotateLeft()
     {
+        if (!CheckDir(Vector3.left))
+        {
+            return;
+        }
         MakeRotate(Vector3.left);
         Enums.Sides tempSide;
 
         tempSide = currentOrientation[0];
         currentOrientation[0] = currentOrientation[5];
-        currentOrientation[5] = currentOrientation[3];
-        currentOrientation[3] = currentOrientation[4];
+        currentOrientation[5] = currentOrientation[2];
+        currentOrientation[2] = currentOrientation[4];
         currentOrientation[4] = tempSide;
         side = currentOrientation[0];
 
     }
     void RotateRight()
     {
+        if (!CheckDir(Vector3.right))
+        {
+            return;
+        }
         MakeRotate(Vector3.right);
         Enums.Sides tempSide;
 
         tempSide = currentOrientation[0];
         currentOrientation[0] = currentOrientation[4];
-        currentOrientation[4] = currentOrientation[3];
-        currentOrientation[3] = currentOrientation[5];
+        currentOrientation[4] = currentOrientation[2];
+        currentOrientation[2] = currentOrientation[5];
         currentOrientation[5] = tempSide;
         side = currentOrientation[0];
 
@@ -107,7 +124,6 @@ public class Enemy : MonoBehaviour
         if (!_isRotating)
         {
             var direction = TargetPosition.position - transform.position;
-            print(direction);
             if ( Mathf.Abs(direction.x) > Mathf.Abs(direction.z))
             {
                 if(direction.x > 0)
@@ -128,19 +144,26 @@ public class Enemy : MonoBehaviour
     
     bool CheckDir(Vector3 dir)
     {
-        return !Physics.Raycast(transform.position + dir, dir, 2);
+        return !Physics.Raycast(transform.position, dir, 0.5F);
     }
     void MakeRotate(Vector3 dir)
     {
+
         var anchor = gameObject.transform.position + (Vector3.down + dir) * 0.5f;
         var axis = Vector3.Cross(Vector3.up, dir);
-        if(CheckDir(dir))
-         StartCoroutine(Roll(anchor,axis));
+        if (CheckDir(dir))
+        { 
+         StartCoroutine(Roll(anchor,axis,CheckSide()));
+        }
     }
 
-    IEnumerator Roll(Vector3 anchor, Vector3 axis)
+    IEnumerator Roll(Vector3 anchor, Vector3 axis, bool pause = false)
     {
         _isRotating = true;
+        if (pause)
+        {
+            yield return new WaitForSeconds(1f);
+        }
            for(int i=0; i < (90 / speed); i++)
         {
             gameObject.transform.RotateAround(anchor, axis, speed);
@@ -148,5 +171,19 @@ public class Enemy : MonoBehaviour
         }
         thud.Play();
         _isRotating = false;
+    }
+
+    bool CheckSide()
+    {
+        if(side == Enums.Sides.Right)
+        { 
+            return true;
+        }
+        return false;
+    }
+
+    void DoDamage()
+    {
+        
     }
 }
