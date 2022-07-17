@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public int hp = 5;
+    public int hp = 10;
     public Enums.Sides[] currentOrientation = new Enums.Sides[6] {Enums.Sides.Up, Enums.Sides.Front,Enums.Sides.Down, Enums.Sides.Back, Enums.Sides.Left,Enums.Sides.Right};
     [SerializeField]
     public Enums.Sides side;
@@ -90,7 +90,7 @@ public class Enemy : MonoBehaviour
     }
     void Start()
     {
-    
+        TargetPosition = GameObject.Find("Player").transform;
     }
 
     
@@ -159,6 +159,7 @@ public class Enemy : MonoBehaviour
     {
         if(side == Enums.Sides.Right)
         { 
+            DoDamage(); 
             return true;
         }
         return false;
@@ -166,6 +167,13 @@ public class Enemy : MonoBehaviour
 
     void DoDamage()
     {
-        
+        hp -= 1;
+        print(hp);
+        if(hp <= 0)
+        {
+            Destroy(transform.parent.gameObject);
+                
+        }
+
     }
 }
