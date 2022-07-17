@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
     [Header("Player Variables")]
     public float speed;
 
+    [Header("Audio")]
+    public AudioClip[] audioClips;
 
     private Animator animator;
     // Start is called before the first frame update

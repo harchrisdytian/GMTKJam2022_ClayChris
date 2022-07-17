@@ -61,6 +61,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 5
+  currentOrientation: 000000000100000002000000030000000400000005000000
   side: 0
   speed: 3
   TargetPosition: {fileID: 0}
@@ -78,7 +79,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: dca720fcd119975419363eff54b2ef27, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.312
   m_Pitch: 0.91
   Loop: 0
   Mute: 0
