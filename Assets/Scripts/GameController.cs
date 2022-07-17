@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Cinemachine;
 
 public class GameController : MonoBehaviour
 {
@@ -12,7 +13,8 @@ public class GameController : MonoBehaviour
     public Transform[] spawns;
     public float maxRate,minRate,enemySpawnRate;
 
-    public Button PlayButton;
+    public Button PlayButton, ContinueButton;
+    public CinemachineVirtualCamera virtualCam;
 
     [HideInInspector]
     public bool gameOver;
@@ -33,8 +35,6 @@ public class GameController : MonoBehaviour
 
     public void StartGame()
     {
-        int randomSpawnIndex = Random.Range(0, spawns.Length);
-        Instantiate(Player, spawns[randomSpawnIndex].position, Quaternion.identity);
         SpawnPlayer();
         SpawnEnemy();
         gameOver = false;
@@ -72,6 +72,15 @@ public class GameController : MonoBehaviour
             Enemy[enemySpawnNumber].SetActive(true);
             enemySpawnRate = Mathf.Clamp(enemySpawnRate,minRate, maxRate);
             yield return new WaitForSeconds(enemySpawnRate);
+        }
+    }
+
+    public void GameOver()
+    {
+        virtualCam.Priority = 15;
+        for (int i = 0; i < Enemy.Length; i++)
+        {
+            Enemy[i].SetActive(false);
         }
     }
 }

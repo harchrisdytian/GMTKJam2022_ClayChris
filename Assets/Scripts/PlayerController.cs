@@ -11,6 +11,10 @@ public class PlayerController : MonoBehaviour
     public AudioClip[] audioClips;
     public AudioSource audioSource;
 
+    [Header("Particle System")]
+    public ParticleSystem ps;
+    public GameObject body;
+
     private Animator animator;
     private GameController gameController;
 
@@ -20,6 +24,7 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
         gameController = FindObjectOfType<GameController>();
+        ps = GetComponent<ParticleSystem>();
     }
 
     // Update is called once per frame
@@ -47,5 +52,15 @@ public class PlayerController : MonoBehaviour
     {
         audioSource.clip = audioClips[index];
         audioSource.Play();
+    }
+
+    public void Death()
+    {
+        animator.SetBool("Dead", true);
+        gameController.gameOver = true;
+        gameController.ContinueButton.gameObject.SetActive(true);
+        gameController.GameOver();
+        ps.Play();
+        body.SetActive(false);
     }
 }

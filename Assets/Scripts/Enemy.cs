@@ -181,7 +181,7 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Hit");
+            collision.gameObject.GetComponent<PlayerController>().Death();
         }
     }
 }
