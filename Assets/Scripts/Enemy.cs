@@ -171,9 +171,17 @@ public class Enemy : MonoBehaviour
         print(hp);
         if(hp <= 0)
         {
-            Destroy(transform.parent.gameObject);
+            gameObject.SetActive(false);
                 
         }
 
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("Hit");
+        }
     }
 }

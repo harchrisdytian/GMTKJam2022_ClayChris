@@ -18,11 +18,13 @@ public class Spikes : MonoBehaviour
     public GameObject spikes;
 
     private Collider collider;
+    private AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()
     {
         collider = GetComponent<Collider>();
+        audioSource = GetComponent<AudioSource>();
         StartCoroutine(LaunchSpikes());
     }
 
@@ -33,6 +35,7 @@ public class Spikes : MonoBehaviour
         yield return new WaitForSeconds(reload);
         spikes.SetActive(true);
         collider.enabled = true;
+        audioSource.Play();
         yield return new WaitForSeconds(waitTime);
         spikes.SetActive(false);
         collider.enabled = false;

@@ -6,14 +6,16 @@ using UnityEngine.UI;
 public class GameController : MonoBehaviour
 {
     [Header("Prefabs")]
-    public GameObject Enemy;
+    public GameObject[] Enemy;
     public GameObject Player, playerBody;
     [Header("Spawns")]
     public Transform[] spawns;
+    public float maxRate,minRate,enemySpawnRate;
 
     public Button PlayButton;
 
     private int playerSpawnNumber, enemySpawnNumber;
+    private bool gameOver;
 
     // Start is called before the first frame update
     void Start()
@@ -48,12 +50,26 @@ public class GameController : MonoBehaviour
         enemySpawnNumber = Random.Range(0, spawns.Length);
         if(enemySpawnNumber != playerSpawnNumber)
         {
-            Instantiate(Enemy, spawns[enemySpawnNumber].position, Quaternion.identity);
+            Enemy[enemySpawnNumber].SetActive(true);
             playerSpawnNumber = -1;
+            StartCoroutine(GameLoop());
         }
         else
         {
             SpawnEnemy();
+        }
+    }
+
+    IEnumerator GameLoop()
+    {
+        yield return new WaitForSeconds(5);
+
+        while (!gameOver)
+        {
+            enemySpawnNumber = Random.Range(0, spawns.Length);
+            Enemy[enemySpawnNumber].SetActive(true);
+            enemySpawnRate = Mathf.Clamp(enemySpawnRate,minRate, maxRate);
+            yield return new WaitForSeconds(enemySpawnRate);
         }
     }
 }
