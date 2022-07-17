@@ -62,8 +62,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 5
   side: 0
+  speed: 3
   TargetPosition: {fileID: 0}
-  thud: {fileID: 0}
+  thud: {fileID: 1812963304780238077}
+  dustCloud: {fileID: 0}
 --- !u!82 &1812963304780238077
 AudioSource:
   m_ObjectHideFlags: 0

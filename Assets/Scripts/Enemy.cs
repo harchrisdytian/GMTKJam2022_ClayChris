@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
     public Transform TargetPosition;
     private bool _isRotating = false;
     public AudioSource thud;
+    public ParticleSystem dustCloud;
     public 
 
 
@@ -170,6 +171,7 @@ public class Enemy : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
         }
         thud.Play();
+        dustCloud.Play();
         _isRotating = false;
     }
 
