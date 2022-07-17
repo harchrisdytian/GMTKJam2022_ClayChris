@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour
     private bool _isRotating = false, _pause = false;
     public AudioSource thud;
     public ParticleSystem dustCloud;
+    public Animation Animation;
     public float flashingTime, blinkingTime;
 
     private GameController gameController;
@@ -98,6 +99,11 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(TargetPosition == null)
+        { 
+            TargetPosition = FindObjectOfType<PlayerController>().transform;
+        }
+
         if (!_isRotating && !_pause)
         {
             var direction = TargetPosition.position - transform.position;
@@ -169,6 +175,7 @@ public class Enemy : MonoBehaviour
     void DoDamage()
     {
         hp -= 1;
+        Animation.Play();
         print(hp);
         //StartCoroutine(DisplayDamage());
 

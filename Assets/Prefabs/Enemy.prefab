@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8369132980300749219}
   - component: {fileID: 8369132980300749218}
   - component: {fileID: 1812963304780238077}
+  - component: {fileID: 4957275477824743727}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -67,6 +68,7 @@ MonoBehaviour:
   TargetPosition: {fileID: 0}
   thud: {fileID: 1812963304780238077}
   dustCloud: {fileID: 0}
+  Animation: {fileID: 4957275477824743727}
   flashingTime: 0.075
   blinkingTime: 3
 --- !u!82 &1812963304780238077
@@ -165,6 +167,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!111 &4957275477824743727
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8369132980300748892}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 3b1a5da8db0e7df469ed9ace600cac49, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 3b1a5da8db0e7df469ed9ace600cac49, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1001 &8369132980853377858
 PrefabInstance:
   m_ObjectHideFlags: 0
