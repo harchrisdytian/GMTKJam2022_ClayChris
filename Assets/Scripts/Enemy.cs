@@ -17,10 +17,11 @@ public class Enemy : MonoBehaviour
     public AudioSource thud;
     public ParticleSystem dustCloud;
     public Animation Animation;
+    public float flashingTime, blinkingTime;
 
+    private GameController gameController;
 
-
-    void RotateBack()
+    public void RotateBack()
     {
         if (!CheckDir(Vector3.back))
         {
@@ -91,6 +92,7 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         TargetPosition = FindObjectOfType<PlayerController>().transform;
+        gameController = GetComponent<GameController>();
     }
 
     
@@ -174,13 +176,29 @@ public class Enemy : MonoBehaviour
     {
         hp -= 1;
         Animation.Play();
+        print(hp);
+        //StartCoroutine(DisplayDamage());
+
         if(hp <= 0)
         {
             gameObject.SetActive(false);
-                
+            gameController.maxRate--;
+            gameController.minRate--;
         }
-
     }
+
+    //IEnumerator DisplayDamage()
+    //{
+    //    MeshRenderer MR = GetComponentInChildren<MeshRenderer>();
+
+    //    for (int i = 0; i < blinkingTime; i++)
+    //    {
+    //        MR.enabled = false;
+    //        yield return new WaitForSeconds(flashingTime);
+    //        MR.enabled = true;
+    //        Debug.Log("blink");
+    //    }
+    //}
 
     private void OnCollisionEnter(Collision collision)
     {

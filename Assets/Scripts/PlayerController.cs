@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Player Variables")]
     public float speed;
+    public bool dead;
 
     [Header("Audio")]
     public AudioClip[] audioClips;
@@ -56,7 +57,8 @@ public class PlayerController : MonoBehaviour
 
     public void Death()
     {
-        animator.SetBool("Dead", true);
+        dead = true;
+        animator.SetBool("Dead", dead);
         gameController.gameOver = true;
         gameController.ContinueButton.gameObject.SetActive(true);
         gameController.GameOver();
