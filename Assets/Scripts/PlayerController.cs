@@ -9,18 +9,26 @@ public class PlayerController : MonoBehaviour
 
     [Header("Audio")]
     public AudioClip[] audioClips;
+    public AudioSource audioSource;
 
     private Animator animator;
+    private GameController gameController;
+
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
+        gameController = FindObjectOfType<GameController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Movement();
+        if (!gameController.gameOver)
+        {
+            Movement();
+        }
     }
 
     private void Movement()
@@ -33,5 +41,11 @@ public class PlayerController : MonoBehaviour
         transform.Translate(movement * speed * Time.deltaTime);
 
         animator.SetFloat("Run", movement.magnitude);
+    }
+
+    public void PlaySound(int index)
+    {
+        audioSource.clip = audioClips[index];
+        audioSource.Play();
     }
 }

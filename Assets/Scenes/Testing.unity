@@ -1571,7 +1571,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -2012,6 +2012,7 @@ MonoBehaviour:
   minRate: 20
   enemySpawnRate: 0
   PlayButton: {fileID: 1085061445}
+  gameOver: 0
 --- !u!4 &129435995
 Transform:
   m_ObjectHideFlags: 0
@@ -18244,7 +18245,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 1.34, y: 0.5, z: 3.565}
+  m_Extents: {x: 1.56, y: 0.5, z: 3.565}
   m_MoveThreshold: 0.1
   m_Carve: 1
   m_CarveOnlyStationary: 1
@@ -19633,7 +19634,7 @@ PrefabInstance:
     - target: {fileID: 2189326858461275784, guid: 171c28e59f6c69b4dbc5d6822dde73a2, type: 3}
       propertyPath: audioClips.Array.data[0]
       value: 
-      objectReference: {fileID: 8300000, guid: 5f958c62c3c95004daf8110f7d5b50fd, type: 3}
+      objectReference: {fileID: 8300000, guid: 123e788076a601844b274a214392527e, type: 3}
     - target: {fileID: 2189326858461275785, guid: 171c28e59f6c69b4dbc5d6822dde73a2, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -19696,6 +19697,10 @@ PrefabInstance:
     - target: {fileID: 4210515036192769470, guid: 97464db48e9eb504b879ca63456cb2c6, type: 3}
       propertyPath: m_Name
       value: Dust
+      objectReference: {fileID: 0}
+    - target: {fileID: 4210515036192769470, guid: 97464db48e9eb504b879ca63456cb2c6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7339572966834299224, guid: 97464db48e9eb504b879ca63456cb2c6, type: 3}
       propertyPath: m_RootOrder

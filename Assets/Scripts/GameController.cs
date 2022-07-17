@@ -14,13 +14,15 @@ public class GameController : MonoBehaviour
 
     public Button PlayButton;
 
+    [HideInInspector]
+    public bool gameOver;
+
     private int playerSpawnNumber, enemySpawnNumber;
-    private bool gameOver;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        gameOver = true;
     }
 
     // Update is called once per frame
@@ -35,7 +37,7 @@ public class GameController : MonoBehaviour
         Instantiate(Player, spawns[randomSpawnIndex].position, Quaternion.identity);
         SpawnPlayer();
         SpawnEnemy();
-
+        gameOver = false;
     }
 
     public void SpawnPlayer()

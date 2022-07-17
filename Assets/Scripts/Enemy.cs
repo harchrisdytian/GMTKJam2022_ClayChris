@@ -151,7 +151,7 @@ public class Enemy : MonoBehaviour
         }
         yield return new WaitForSeconds(0.1f);
         thud.Play();
-        dustCloud.Play();
+        //dustCloud.Play();
         _isRotating = false;
     }
     
