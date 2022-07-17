@@ -20,21 +20,25 @@ public class GameController : MonoBehaviour
     public bool gameOver;
 
     private int playerSpawnNumber, enemySpawnNumber;
+    private PlayerController playerController;
 
     // Start is called before the first frame update
     void Start()
     {
         gameOver = true;
+        playerController = FindObjectOfType<PlayerController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        maxRate = Mathf.Clamp(maxRate, 10, 15);
+        minRate = Mathf.Clamp(minRate, 3, 5);
     }
 
     public void StartGame()
     {
+        playerController.dead = false;
         SpawnPlayer();
         SpawnEnemy();
         gameOver = false;

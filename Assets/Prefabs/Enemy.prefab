@@ -33,7 +33,7 @@ Transform:
   m_Children:
   - {fileID: 8336052305182387369}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &8369132980300749219
 BoxCollider:
@@ -67,6 +67,8 @@ MonoBehaviour:
   TargetPosition: {fileID: 0}
   thud: {fileID: 1812963304780238077}
   dustCloud: {fileID: 0}
+  flashingTime: 0.075
+  blinkingTime: 3
 --- !u!82 &1812963304780238077
 AudioSource:
   m_ObjectHideFlags: 0
