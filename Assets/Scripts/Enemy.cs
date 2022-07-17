@@ -6,44 +6,19 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public int hp = 5;
-    public static  Enums.Sides[] currentOrientation = new Enums.Sides[6] {Enums.Sides.Up, Enums.Sides.Front,Enums.Sides.Down, Enums.Sides.Back, Enums.Sides.Left,Enums.Sides.Right};
+    public Enums.Sides[] currentOrientation = new Enums.Sides[6] {Enums.Sides.Up, Enums.Sides.Front,Enums.Sides.Down, Enums.Sides.Back, Enums.Sides.Left,Enums.Sides.Right};
     [SerializeField]
     public Enums.Sides side;
     [SerializeField]
     private float speed = 1f;
     private Quaternion nextRotation;
     public Transform TargetPosition;
-    private bool _isRotating = false;
+    private bool _isRotating = false, _pause = false;
     public AudioSource thud;
     public ParticleSystem dustCloud;
     public 
 
 
-    void SetSide(Enums.Sides CurrentSide)
-    {
-        switch (CurrentSide)
-        {
-            case Enums.Sides.Up:
-                gameObject.transform.rotation = Quaternion.identity;
-                break;
-            case Enums.Sides.Down:
-                gameObject.transform.localRotation = gameObject.transform.localRotation * Quaternion.Euler(180, 0, 0);
-                break;
-            case Enums.Sides.Left:
-                gameObject.transform.localRotation = gameObject.transform.localRotation * Quaternion.Euler(0, 0, 90);
-                break;
-            case Enums.Sides.Right:
-                gameObject.transform.localRotation = gameObject.transform.localRotation * Quaternion.Euler(0, 0, -90);
-                break;
-            case Enums.Sides.Front:
-                gameObject.transform.localRotation = gameObject.transform.localRotation * Quaternion.Euler(90, 0, 0);
-                break;
-            case Enums.Sides.Back:
-                gameObject.transform.localRotation = gameObject.transform.localRotation * Quaternion.Euler(-90, 0, 0);
-                break;
-        }
-        side = CurrentSide;
-    }
 
     void RotateBack()
     {
@@ -115,14 +90,14 @@ public class Enemy : MonoBehaviour
     }
     void Start()
     {
-
+    
     }
 
     
     // Update is called once per frame
     void Update()
     {
-        if (!_isRotating)
+        if (!_isRotating && !_pause)
         {
             var direction = TargetPosition.position - transform.position;
             if ( Mathf.Abs(direction.x) > Mathf.Abs(direction.z))
@@ -165,16 +140,21 @@ public class Enemy : MonoBehaviour
         {
             yield return new WaitForSeconds(1f);
         }
+        if(Random.value > 0.8f)
+        {
+            yield return new WaitForSeconds(0.2f);
+        }
            for(int i=0; i < (90 / speed); i++)
         {
             gameObject.transform.RotateAround(anchor, axis, speed);
             yield return new WaitForSeconds(0.01f);
         }
+        yield return new WaitForSeconds(0.1f);
         thud.Play();
         dustCloud.Play();
         _isRotating = false;
     }
-
+    
     bool CheckSide()
     {
         if(side == Enums.Sides.Right)
