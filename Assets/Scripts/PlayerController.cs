@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour
         {
             Movement();
         }
+        animator.SetBool("Dead", dead);
     }
 
     private void Movement()
@@ -58,11 +59,18 @@ public class PlayerController : MonoBehaviour
     public void Death()
     {
         dead = true;
-        animator.SetBool("Dead", dead);
         gameController.gameOver = true;
         gameController.ContinueButton.gameObject.SetActive(true);
         gameController.GameOver();
         ps.Play();
         body.SetActive(false);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            Death();
+        }
     }
 }

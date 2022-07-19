@@ -18,7 +18,10 @@ public class Enemy : MonoBehaviour
     public ParticleSystem dustCloud;
     public Animation Animation;
     public float flashingTime, blinkingTime;
+    public GameObject newEnemy;
 
+    private bool checkingPos;
+    private Vector3 previousLocation;
     private GameController gameController;
 
     public void RotateBack()
@@ -93,6 +96,7 @@ public class Enemy : MonoBehaviour
     {
         TargetPosition = FindObjectOfType<PlayerController>().transform;
         gameController = GetComponent<GameController>();
+        previousLocation = transform.position;
     }
 
     
@@ -121,6 +125,36 @@ public class Enemy : MonoBehaviour
                     RotateForward();
                 else
                     RotateBack();
+            }
+        }
+
+        //if(transform.position == previousLocation && !checkingPos)
+        //{
+        //    StartCoroutine(CheckIfStuck());
+        //}
+        //else
+        //{
+        //    previousLocation = transform.position;
+        //    checkingPos = true;
+        //}
+    }
+
+    IEnumerator CheckIfStuck()
+    {
+        for(int i = 0; i < 3; i++)
+        {
+            yield return new WaitForSeconds(7);
+            if(previousLocation != transform.position)
+            {
+                checkingPos = false;
+                break;
+            }
+            else if(i == 2 && previousLocation == transform.position)
+            {
+                Debug.Log("new ENemy");
+                Instantiate(newEnemy, new Vector3(transform.position.x, 0.31f, transform.position.z)
+                    , Quaternion.identity);
+                Destroy(gameObject);
             }
         }
     }
